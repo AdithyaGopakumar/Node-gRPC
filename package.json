@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "pb:gen":"powershell -ExecutionPolicy unrestricted ./scripts/gen.ps1 greet calculator",
+    "pb:gen":"powershell -ExecutionPolicy unrestricted ./scripts/gen.ps1 greet calculator primes",
     "greet:server":"nodemon ./greet/server/index.js",
     "greet:client":"nodemon ./greet/client/index.js",
     "calculator:server":"nodemon ./calculator/server/index.js",
-    "calculator:client":"nodemon ./calculator/client/index.js"
+    "calculator:client":"nodemon ./calculator/client/index.js",
+    "primes:server":"nodemon ./primes/server/index.js",
+    "primes:client":"nodemon ./primes/client/index.js"
   },
   "author": "Adithya Gopakumar",
   "license": "ISC",

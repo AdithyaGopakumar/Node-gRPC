@@ -28,7 +28,8 @@ function deserialize_greet_GreetResponse(buffer_arg) {
 
 
 var GreetServiceService = exports.GreetServiceService = {
-  greet: {
+  // unary
+greet: {
     path: '/greet.GreetService/Greet',
     requestStream: false,
     responseStream: false,
@@ -39,7 +40,8 @@ var GreetServiceService = exports.GreetServiceService = {
     responseSerialize: serialize_greet_GreetResponse,
     responseDeserialize: deserialize_greet_GreetResponse,
   },
-  greetManyTime: {
+  // server side streaming 
+greetManyTime: {
     path: '/greet.GreetService/GreetManyTime',
     requestStream: false,
     responseStream: true,
