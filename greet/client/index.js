@@ -1,10 +1,11 @@
-const grpc = require('@grpc/grpc-js');
-const { GreetRequest } = require('../proto/greet_pb');
-const { GreetServiceClient } = require('../proto/greet_grpc_pb');
+const grpc = require("@grpc/grpc-js");
+const { GreetRequest } = require("../proto/greet_pb");
+const { GreetServiceClient } = require("../proto/greet_grpc_pb");
 
+// unary
 function doGreet(client) {
-  console.log('doGreet was invoked');
-  const req = new GreetRequest().setFirstName('Adithya');
+  console.log("doGreet was invoked");
+  const req = new GreetRequest().setFirstName("Adithya");
 
   client.greet(req, (err, res) => {
     if (err) {
@@ -14,15 +15,28 @@ function doGreet(client) {
   });
 }
 
+// server side streaming
+function doGreetManyTime(client) {
+  console.log("doGreetManyTime was invoked");
+  const req = new GreetRequest().setFirstName("Adithya");
+  const call = client.greetManyTime(req);
+
+  call.on("data", (res) => {
+    console.log(`greetManyTime called : ${res.getResult()}`);
+  });
+}
+
 function main() {
   let credentials = grpc.ChannelCredentials.createInsecure();
-  const serverAddress = '0.0.0.0:50051'
-  const client = new GreetServiceClient(serverAddress, credentials,);
+  const serverAddress = "0.0.0.0:50051";
+  const client = new GreetServiceClient(serverAddress, credentials);
 
-  // rpc call
-  doGreet(client);
-
+  // rpc calls
+  // unary
+  // doGreet(client);
+  // server side streaming
+  doGreetManyTime(client);
   client.close();
 }
 
-main()
+main();
