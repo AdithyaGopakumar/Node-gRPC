@@ -1,0 +1,19 @@
+{
+  "name": "grpc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pb:gen":"powershell -ExecutionPolicy unrestricted ./scripts/gen.ps1 greet",
+    "greet:server":"nodemon ./greet/server/index.js"
+  },
+  "author": "Adithya Gopakumar",
+  "license": "ISC",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.9.0",
+    "google-protobuf": "^3.21.2"
+  },
+  "devDependencies": {
+    "grpc-tools": "^1.11.3"
+  }
+}
