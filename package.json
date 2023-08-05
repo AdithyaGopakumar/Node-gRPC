@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "pb:gen":"powershell -ExecutionPolicy unrestricted ./scripts/gen.ps1 greet",
-    "greet:server":"nodemon ./greet/server/index.js"
+    "greet:server":"nodemon ./greet/server/index.js",
+    "greet:client":"nodemon ./greet/client/index.js"
   },
   "author": "Adithya Gopakumar",
   "license": "ISC",
