@@ -15,4 +15,6 @@ service GreetService {
   rpc Greet(GreetRequest) returns (GreetResponse);
   // server side streaming 
   rpc GreetManyTime (GreetRequest) returns (stream GreetResponse);
+  // client side streaming 
+  rpc LongGreet (stream GreetRequest) returns (GreetResponse);
 }

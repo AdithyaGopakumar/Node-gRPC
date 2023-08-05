@@ -26,16 +26,32 @@ function doGreetManyTime(client) {
   });
 }
 
+// client side streaming
+function doLongGreet(client) {
+  console.log("doLongGreet was invoked");
+
+  const namesList = ["Ben", "Tom", "Jerry", "John", "Brad"]
+  const call = client.longGreet((err, res) => {
+    if (err) {
+      return console.log(err);
+    }
+    console.log(`Long Greet ${res.getResult()}`);
+  })
+
+  namesList.map((name)=>{
+    return new GreetRequest().setFirstName(name)
+  }).forEach((req)=>{call.write(req)})
+  call.end()
+}
 function main() {
   let credentials = grpc.ChannelCredentials.createInsecure();
   const serverAddress = "0.0.0.0:50051";
   const client = new GreetServiceClient(serverAddress, credentials);
 
   // rpc calls
-  // unary
   // doGreet(client);
-  // server side streaming
-  doGreetManyTime(client);
+  // doGreetManyTime(client);
+  doLongGreet(client);
   client.close();
 }
 
