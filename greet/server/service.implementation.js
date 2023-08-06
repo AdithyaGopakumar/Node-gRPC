@@ -32,3 +32,19 @@ exports.longGreet=(call,callback)=>{
     callback(null,res)
   })
 }
+
+// bidirectional streaming
+exports.greetEveryOne=(call,_)=>{
+  console.log("greetEveryOne was invoked");
+
+  call.on("data",(req)=>{
+    console.log(`received request ${req}`);
+    const res = new pb.GreetResponse().setResult(req.getFirstName())
+    console.log(`sending response ${res}`);
+    call.write(res)
+  })
+
+  call.on("end",()=>{
+    call.end()
+  })
+}

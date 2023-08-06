@@ -43,6 +43,22 @@ function doLongGreet(client) {
   }).forEach((req)=>{call.write(req)})
   call.end()
 }
+
+function doGreetEveryOne(client) {
+  console.log("doGreetEveryOne was invoked");
+  const namesList = ["Ben", "Tom", "Jerry", "John", "Brad"]
+  const call = client.greetEveryOne()
+
+  call.on("data",(res)=>{
+    console.log(`GreetEveryOne : Hai : ${res.getResult()}`);
+  })
+
+  namesList.map((name)=>{
+    return new GreetRequest().setFirstName(name)
+  }).forEach((req)=>{call.write(req)})
+  call.end()
+}
+
 function main() {
   let credentials = grpc.ChannelCredentials.createInsecure();
   const serverAddress = "0.0.0.0:50051";
@@ -51,7 +67,8 @@ function main() {
   // rpc calls
   // doGreet(client);
   // doGreetManyTime(client);
-  doLongGreet(client);
+  // doLongGreet(client);
+  doGreetEveryOne(client)
   client.close();
 }
 
