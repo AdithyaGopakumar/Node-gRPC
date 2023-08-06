@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package calculator;
+
+message AvgRequest {
+  int32 number =1;
+}
+
+message AvgResponcse {
+  double result =1;
+}
+

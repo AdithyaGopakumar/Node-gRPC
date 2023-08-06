@@ -3,7 +3,9 @@ syntax = "proto3";
 package calculator;
 
 import "sum.proto";
+import "avg.proto";
 
 service Calculator {
   rpc Sum (SumRequest) returns (SumResponse);
+  rpc Avg ( stream AvgRequest) returns (AvgResponcse);
 }
