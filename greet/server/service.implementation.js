@@ -19,32 +19,46 @@ exports.greetManyTime = (call, _) => {
 }
 
 // client side streaming
-exports.longGreet=(call,callback)=>{
+exports.longGreet = (call, callback) => {
   console.log("Long Greet was invoked");
-  let greet =""
+  let greet = ""
 
-  call.on("data",(req)=>{
-    greet+=`Hello ${req.getFirstName()}\n`
+  call.on("data", (req) => {
+    greet += `Hello ${req.getFirstName()}\n`
   })
 
-  call.on("end",()=>{
+  call.on("end", () => {
     const res = new pb.GreetResponse().setResult(greet)
-    callback(null,res)
+    callback(null, res)
   })
 }
 
 // bidirectional streaming
-exports.greetEveryOne=(call,_)=>{
+exports.greetEveryOne = (call, _) => {
   console.log("greetEveryOne was invoked");
 
-  call.on("data",(req)=>{
+  call.on("data", (req) => {
     console.log(`received request ${req}`);
     const res = new pb.GreetResponse().setResult(req.getFirstName())
     console.log(`sending response ${res}`);
     call.write(res)
   })
 
-  call.on("end",()=>{
+  call.on("end", () => {
     call.end()
   })
+}
+
+const sleep =(ms)=> new Promise((r)=> setTimeout(r,ms))
+exports.greetWithDeadline = async (call, callback) => {
+  console.log("greetWithDeadline was invoked");
+
+  for (let index = 0; index < 3; index++) {
+    if (call.cancelled) {
+      console.log("The client cancelled the request");
+    }
+    await sleep(1000)
+  }
+  const res = new pb.GreetResponse().setResult(`Hello ${call.request.getFirstName()}`)
+  callback(null, res)
 }

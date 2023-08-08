@@ -59,6 +59,21 @@ function doGreetEveryOne(client) {
   call.end()
 }
 
+function doGreetWithDeadline(client, ms) {
+  console.log('doGreetWithDeadline was invoked');
+  const req = new GreetRequest()
+      .setFirstName('Adithya');
+
+  client.greetWithDeadline(req, {
+    deadline: new Date(Date.now() + ms),
+  }, (err, res) => {
+    if (err) {
+      return console.log(err);
+    }
+    console.log(`GreetWithDeadline: ${res.getResult()}`);
+  });
+}
+
 function main() {
   let credentials = grpc.ChannelCredentials.createInsecure();
   const serverAddress = "0.0.0.0:50051";
@@ -68,7 +83,8 @@ function main() {
   // doGreet(client);
   // doGreetManyTime(client);
   // doLongGreet(client);
-  doGreetEveryOne(client)
+  // doGreetEveryOne(client)
+  doGreetWithDeadline(client,5000)
   client.close();
 }
 
